@@ -290,7 +290,7 @@ using terms from application "Messages"
 	end terminarCita
 	
 	on lightOptions(theBuddy, theScript)
-		send "You can change the lights in Noah's room! The current options are \"blackout\" (off), \"red\", \"rainbow\", \"blue\", and \"green\". Send me a message containing any of these words to change the lights!" to theBuddy
+		send "You can change the lights in Noah's room! The current options are \"blackout\" (off), \"red\", \"rainbow\", \"blue\", and \"green\". Send me a message containing any of these words to change the lights! Type \"exit\" to exit the controller." to theBuddy
 		tell application "Messages" to close windows
 	end lightOptions
 	
