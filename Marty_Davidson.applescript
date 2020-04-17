@@ -4,22 +4,28 @@ and modification is permitted.*)
 use AppleScript version "2.4"
 use scripting additions
 
-(*current capability information*)
-set currentRelease to "Many more features are coming soon! For now, try texting me a message containing \"urgent\" within the next 60 seconds to ignite me! Or text me a message containing \"minions\" to fetch a list of all of the contacts on my list, along with their phone numbers. You can text a message containing \"cita\" to start scheduling an appointment with me, or text a message containing \"valentine\" for a special surprise. Text a message containing \"lights\" to control the lights in Noah's room!"
-
-set intro to "Hi! I'm Marty, Noah's iMessage auto-reply bot. It appears as though either we've never met, or my software has been updated since we last talked. I've just added you to my list of contacts. To remove yourself from my list at any time, text me any message containing \"opt out\". To opt back in after opting out, text me any message containing \"opt in\". Try texting me a message containing \"marty\" to get started! And if I ever seem idle, just send any message containing \"marty\" to wake me back up!"
-
-set goodBye to "! I have removed you from my list. Remember, to opt back in at any time, just text me any message containing \"opt in\". Seeya around!"
-
-set valenText to ". Happy Valentine's Day! Marty hopes that you have a wonderful day. The call will be ended momentarily."
-
-set scheduleInstr to "To schedule an appointment with me, please start by sending me a text with your desired appointment date and time in the format MM DD YY HH:MM:SS XM. You can omit seconds if they are unimportant to you."
-
 
 using terms from application "Messages"
 	(*This function essentially creats a subscript for each "buddy" (contact) that's added to Marty's list. It's basically
 	like a class in Java. The "class" has three properties: the contact info, the contact's current state in the state machine,
 	and a timer which can be reset but is useful for things like urgent timeout.*)
+	
+	global currentRelease, intro, goodBye, valenText, scheduleInstr, reinitialize
+	
+	on setup()
+		(*current capability information*)
+		set currentRelease to "Many more features are coming soon! For now, try texting me a message containing \"urgent\" within the next 60 seconds to ignite me! Or text me a message containing \"minions\" to fetch a list of all of the contacts on my list, along with their phone numbers. You can text a message containing \"cita\" to start scheduling an appointment with me, or text a message containing \"valentine\" for a special surprise. Text a message containing \"lights\" to control the lights in Noah's room!"
+		
+		set intro to "Hi! I'm Marty, Noah's iMessage auto-reply bot. It appears as though either we've never met, or my software has been updated since we last talked. I've just added you to my list of contacts. To remove yourself from my list at any time, text me any message containing \"opt out\". To opt back in after opting out, text me any message containing \"opt in\". Try texting me a message containing \"marty\" to get started! And if I ever seem idle, just send any message containing \"marty\" to wake me back up!"
+		
+		set goodBye to "! I have removed you from my list. Remember, to opt back in at any time, just text me any message containing \"opt in\". Seeya around!"
+		
+		set valenText to ". Happy Valentine's Day! I love you so much. I hope you love Marty too. The call will be ended momentarily."
+		
+		set scheduleInstr to "To schedule an appointment with me, please start by sending me a text with your desired appointment date and time in the format MM DD YY HH:MM:SS XM. You can omit seconds if they are unimportant to you."
+		
+		set reinitialize to "I have reinitialized. Summon me again for a good time."
+	end setup
 	
 	on createBuddy(theBuddy, initialState)
 		script makeBuddy
@@ -132,9 +138,9 @@ using terms from application "Messages"
 			setTimer(time of (current date))
 		end tell
 		if version = "normal" then
-			send "Hey again! It's Marty." & currentRelease to theBuddy
+			send "Hey again! It's Marty. " & currentRelease to theBuddy
 		else
-			send "It looks like you already opted in." & currentRelease to theBuddy
+			send "It looks like you already opted in. " & currentRelease to theBuddy
 		end if
 		tell application "Messages" to close windows
 	end handler1
@@ -285,13 +291,29 @@ using terms from application "Messages"
 	
 	on lightOptions(theBuddy, theScript)
 		send "You can change the lights in Noah's room! The current options are \"blackout\" (off), \"red\", \"rainbow\", \"blue\", and \"green\". Send me a message containing any of these words to change the lights!" to theBuddy
+		tell application "Messages" to close windows
 	end lightOptions
+	
+	
+	(*load an Arduino program onto the board. Print out error statement on error.*)
+	on loadLightCode(theBuddy, requested)
+		send "Please wait..." to theBuddy
+		try
+			do shell script "/Users/nodog/Downloads/arduino-cli upload -p /dev/cu.usbmodem621 --fqbn arduino:avr:mega ~/Documents/Arduino/" & requested
+		on error
+			send "An error occurred. Please try again." to theBuddy
+			tell application "Messages" to close windows
+			return
+		end try
+		send "I changed the lights in Noah's room to " & requested & "." to theBuddy
+		tell application "Messages" to close windows
+	end loadLightCode
 	
 	
 	(*This is the "main" function: it examines ALL incoming messages and routes them to the
 	appropriate handler functions. It also adds member to buddyList on opting in.*)
 	on message received theMessage from theBuddy for theChat with theMessageText
-		#display dialog handle of theBuddy as string
+		setup()
 		set found to false
 		set verified to false
 		repeat with a from 1 to length of buddyList
@@ -299,7 +321,6 @@ using terms from application "Messages"
 			set check to current's getStringName()
 			if check = theBuddy's name as string then
 				set found to true
-				
 				if theMessageText contains "opt out" then
 					removeMember(theBuddy)
 					exit repeat
@@ -319,6 +340,9 @@ using terms from application "Messages"
 					enterScheduler(theBuddy, current)
 					exit repeat
 				else if current's getStringState() = "urgent" and theMessageText contains "lights" then
+					tell current
+						setState("lights")
+					end tell
 					lightOptions(theBuddy, current)
 					exit repeat
 				else if current's getStringState() = "cita" and theMessageText contains "exit" then
@@ -343,7 +367,7 @@ using terms from application "Messages"
 					tell current
 						setState("initial")
 					end tell
-					send "I have reinitialized. Summon me again for a good time." to theBuddy
+					send reinitialize to theBuddy
 					exit repeat
 				else if current's getStringState() = "citamail" then
 					terminarCita(theBuddy, current, theMessageText)
@@ -351,52 +375,17 @@ using terms from application "Messages"
 				else if (current's getStringState() = "initial" or current's getStringState() = "urgent") and theMessageText contains "marty" then
 					handler1(theBuddy, "normal", current)
 					exit repeat
-					
-				else if theMessageText contains "rainbow" then
-					send "Please wait..." to theBuddy
-					try
-						do shell script "/Users/nodog/Downloads/arduino-cli upload -p /dev/cu.usbmodem621 --fqbn arduino:avr:mega ~/Documents/Arduino/NoahColorPalette"
-					on error
-						send "An error occurred. Please try again." to theBuddy
-					end try
-					send "I changed the lights in Noah's room to rainbow." to theBuddy
-					tell application "Messages" to close windows
-				else if theMessageText contains "blackout" then
-					send "Please wait..." to theBuddy
-					try
-						do shell script "/Users/nodog/Downloads/arduino-cli upload -p /dev/cu.usbmodem621 --fqbn arduino:avr:mega ~/Documents/Arduino/BlackOut"
-					on error
-						send "An error occurred. Please try again." to theBuddy
-					end try
-					send "I changed the lights in Noah's room to blackout." to theBuddy
-					tell application "Messages" to close windows
-				else if (length of theMessageText ³ 3) and theMessageText contains " red" or (text 1 of theMessageText contains "r" and text 2 of theMessageText contains "e" and text 3 of theMessageText contains "d") then
-					send "Please wait..." to theBuddy
-					try
-						do shell script "/Users/nodog/Downloads/arduino-cli upload -p /dev/cu.usbmodem621 --fqbn arduino:avr:mega ~/Documents/Arduino/Red"
-					on error
-						send "An error occurred. Please try again." to theBuddy
-					end try
-					send "I changed the lights in Noah's room to red." to theBuddy
-					tell application "Messages" to close windows
-				else if theMessageText contains "green" then
-					send "Please wait..." to theBuddy
-					try
-						do shell script "/Users/nodog/Downloads/arduino-cli upload -p /dev/cu.usbmodem621 --fqbn arduino:avr:mega ~/Documents/Arduino/Green"
-					on error
-						send "An error occurred. Please try again." to theBuddy
-					end try
-					send "I changed the lights in Noah's room to green." to theBuddy
-					tell application "Messages" to close windows
-				else if theMessageText contains "blue" then
-					send "Please wait..." to theBuddy
-					try
-						do shell script "/Users/nodog/Downloads/arduino-cli upload -p /dev/cu.usbmodem621 --fqbn arduino:avr:mega ~/Documents/Arduino/Blue"
-					on error
-						send "An error occurred. Please try again." to theBuddy
-					end try
-					send "I changed the lights in Noah's room to blue." to theBuddy
-					tell application "Messages" to close windows
+				else if current's getStringState() = "lights" then
+					if theMessageText contains "exit" then
+						tell current
+							setState("initial")
+						end tell
+						send reinitialize to theBuddy
+						exit repeat
+					else
+						loadLightCode(theBuddy, theMessageText)
+						exit repeat
+					end if
 				end if
 			end if
 		end repeat
