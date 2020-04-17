@@ -11,7 +11,7 @@ set intro to "Hi! I'm Marty, Noah's iMessage auto-reply bot. It appears as thoug
 
 set goodBye to "! I have removed you from my list. Remember, to opt back in at any time, just text me any message containing \"opt in\". Seeya around!"
 
-set valenText to ". Happy Valentine's Day! I love you so much. I hope you love Marty too. The call will be ended momentarily."
+set valenText to ". Happy Valentine's Day! Marty hopes that you have a wonderful day. The call will be ended momentarily."
 
 set scheduleInstr to "To schedule an appointment with me, please start by sending me a text with your desired appointment date and time in the format MM DD YY HH:MM:SS XM. You can omit seconds if they are unimportant to you."
 
