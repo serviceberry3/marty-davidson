@@ -1,2 +1,4 @@
 Hi! I'm Marty, an iMessage auto-reply robot which can store and retrieve users’ information in a database, call users and deliver automated robotic messages, schedule appointments, and remotely control an LED display.
 My code is currently being transitioned from AppleScript to JavaScript and will be re-uploaded soon. Cheers!
+
+Change .applescript files to .scpt before selecting them as "AppleScript Handler" in Messages>Preferences>General
