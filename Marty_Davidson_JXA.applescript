@@ -2,7 +2,7 @@ ObjC.import('stdlib');
 
 //define globals
 var app = Application.currentApplication(),
-sa = (app.includeStandardAdditions = true, app);
+sa = (app.includeStandardAdditions = true, app),
 
 buddies = Application('Messages').services["E:nssw088@gmail.com"].buddies,
 
@@ -50,40 +50,74 @@ function exec(program, args) {
 }
 
 function closeMessages() {
-	var app = Application('Script Editor');
-	app.includeStandardAdditions=true;
-	app.activate();
-	//delay(5);
-	//app.runScript(topPath + '/closeMessages.scpt');
+	exec("osascript", [topPath + '/closeMessages.scpt']);
 }
 
 //Handler calls this function upon receiving message in iMessage
 function messageReceived(theMessage, eventDescription) {
 	//find the Buddy
 	var theBuddy = buddies[eventDescription.from.handle()];
+	
 	//get the buddy list from the JSON
 	var buddyList = getBuddyList();
 	if (!buddyList) {
 		buddyList = [];
 	}
 	
+	//function for searching array
+	function searchForBuddy(buddy) {
+		return (buddy.number.toString().localeCompare(this.handle())==0);
+	}
+	
+	//search the list to see if the offending buddy is in it
+	var inList = buddyList.find(searchForBuddy, theBuddy);
+	
+	
 	//check if the user is attempting to opt in
 	if (!theMessage.localeCompare("Opt in")) {
+		if (inList) {
+			//send buddy error message, already opted in
+			sa.send("It looks like you already opted in. " + currentRelease, {to: theBuddy});
+		}
 		//if so, run an addBuddy
-		if (addBuddy(buddyList, theBuddy)<0) {
+		else if (addBuddy(buddyList, theBuddy)<0) {
 			return -1;
 		}
+		else {
+			//send the intro text to the buddy
+			sa.send(intro, {to: theBuddy});
+		}
 
-		//send the intro text to the buddy
-		sa.send(intro, {to: theBuddy});
+		closeMessages();
+	}
+	
+	//if the buddy is in the list, pass to auxiliary function to parse request
+	if (inList) {
+		if (parseBuddyRequest(theMessage, buddyList, theBuddy)<0) {
+			return -1;
+		}
+	}
+	
+	//update json and return
+	var ret = $.NSString.alloc.initWithUTF8String(JSON.stringify(buddyList)).writeToFileAtomically(buddyPath, true);
+	if (!ret) {
+		genericError(Buddy);
+		return -1;
 	}
 	return 0;
+}
+
+function parseBuddyRequest(theMessage, theList, theBuddy) {
+	if (!theMessage.localeCompare("Opt out")) {
+		//remove buddy from the list
+		return removeBuddy(theList, theBuddy);
+	}
 }
 
 function genericError(theBuddy) {
 	sa.send("An error has occurrred. Please try again.", {to: theBuddy});
 	//close messages window and return
-	//with (sa) close(windows);
+	closeMessages();
 	return 0;
 }
 
@@ -94,15 +128,22 @@ function addBuddy(buddyList, Buddy) {
 
 	//push new buddy onto the array
 	buddyList.push(toAdd);
-	var ret = $.NSString.alloc.initWithUTF8String(JSON.stringify(buddyList)).writeToFileAtomically(buddyPath, true);
-	if (!ret) {
-		genericError(Buddy);
-		return -1;
-	}
-	//close messages window and return
 	
-	closeMessages();
+	//close messages window and return
 	return 0;
+}
+
+//remove a specific buddy from the list
+function removeBuddy(buddyList, Buddy){
+	for (var i=0; i<buddyList.length; i++) {
+		if (!buddyList[i].number.toString().localeCompare(Buddy.handle())) {
+		//remove this buddy from the list
+			buddyList.splice(i, 1);
+			sa.send('Thanks, '+Buddy.name()+goodBye, {to: Buddy});
+			closeMessages();
+			return 0;
+		}
+	}
 }
 
 function getBuddyList() {
