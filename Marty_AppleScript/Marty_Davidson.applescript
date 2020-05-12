@@ -4,27 +4,35 @@ and modification is permitted.*)
 use AppleScript version "2.4"
 use scripting additions
 
+on readFile(theFile)
+	set theFile to theFile as string
+	return read theFile
+end readFile
 
 using terms from application "Messages"
 	(*This function essentially creats a subscript for each "buddy" (contact) that's added to Marty's list. It's basically
 	like a class in Java. The "class" has three properties: the contact info, the contact's current state in the state machine,
 	and a timer which can be reset but is useful for things like urgent timeout.*)
 	
-	global currentRelease, intro, goodBye, valenText, scheduleInstr, reinitialize
+	global currentRelease, intro, goodBye, valenText, scheduleInstr, reinitialize, topPath
 	
+	
+	
+	#load up the strings
 	on setup()
+		set topPath to "/Users/nodog/Documents/Scripts/ASMarty"
 		(*current capability information*)
-		set currentRelease to "Many more features are coming soon! For now, try texting me a message containing \"urgent\" within the next 60 seconds to ignite me! Or text me a message containing \"minions\" to fetch a list of all of the contacts on my list, along with their phone numbers. You can text a message containing \"cita\" to start scheduling an appointment with me, or text a message containing \"valentine\" for a special surprise. Text a message containing \"lights\" to control the lights in Noah's room!"
+		set currentRelease to readFile(topPath & "/currentRelease.txt")
 		
-		set intro to "Hi! I'm Marty, Noah's iMessage auto-reply bot. It appears as though either we've never met, or my software has been updated since we last talked. I've just added you to my list of contacts. To remove yourself from my list at any time, text me any message containing \"opt out\". To opt back in after opting out, text me any message containing \"opt in\". Try texting me a message containing \"marty\" to get started! And if I ever seem idle, just send any message containing \"marty\" to wake me back up!"
+		set intro to readFile(topPath & "/intro.txt")
 		
-		set goodBye to "! I have removed you from my list. Remember, to opt back in at any time, just text me any message containing \"opt in\". Seeya around!"
+		set goodBye to readFile(topPath & "/goodBye.txt")
 		
-		set valenText to ". Happy Valentine's Day! I love you so much. I hope you love Marty too. The call will be ended momentarily."
+		set valenText to readFile(topPath & "/valenText.txt")
 		
-		set scheduleInstr to "To schedule an appointment with me, please start by sending me a text with your desired appointment date and time in the format MM DD YY HH:MM:SS XM. You can omit seconds if they are unimportant to you."
+		set scheduleInstr to readFile(topPath & "/scheduleInstr.txt")
 		
-		set reinitialize to "I have reinitialized. Summon me again for a good time."
+		set reinitialize to readFile(topPath & "/reinitialize.txt")
 	end setup
 	
 	on createBuddy(theBuddy, initialState)
