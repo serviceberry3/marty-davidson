@@ -6,3 +6,5 @@ Change any .applescript files to .scpt before selecting them as "AppleScript Han
 A version for newer operating systems is being developed. I'm working on fixing glitches in the AS version.
 
 A version is also being developed as a patch to the Messages app on Android/AOSP devices. Coming soon.
+
+<h1>On newer MacOS versions<h1>
