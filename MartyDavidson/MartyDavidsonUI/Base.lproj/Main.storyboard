@@ -685,7 +685,7 @@
         <scene sceneID="R2V-B0-nI4">
             <objects>
                 <windowController id="B8D-0N-5wS" sceneMemberID="viewController">
-                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
+                    <window key="window" title="Marty Remote" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="480" height="270"/>
@@ -707,11 +707,11 @@
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="MartyDavidson" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="489" height="230"/>
+                        <rect key="frame" x="0.0" y="0.0" width="489" height="92"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TES-UO-XA5">
-                                <rect key="frame" x="137" y="54" width="176" height="18"/>
+                                <rect key="frame" x="156" y="38" width="176" height="18"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Marty is currently disabled" id="DjT-gb-vTR">
                                     <font key="font" metaFont="system" size="14"/>
@@ -720,31 +720,30 @@
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c3s-s6-qiq">
-                                <rect key="frame" x="349" y="157" width="120" height="32"/>
+                                <rect key="frame" x="349" y="28" width="120" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="push" title="Enable Marty" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="cWL-PA-ejP">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="sayButtonClicked:" target="XfG-lQ-9wD" id="FKw-Rt-Cb6"/>
+                                    <action selector="enableDisableAction:" target="XfG-lQ-9wD" id="9aE-1l-SF4"/>
                                 </connections>
                             </button>
-                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oKd-Bs-K1d">
-                                <rect key="frame" x="35" y="97" width="20" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="IIL-pp-uLR"/>
-                            </imageView>
                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A1L-my-aOk">
-                                <rect key="frame" x="26" y="177" width="22" height="21"/>
+                                <rect key="frame" x="55" y="36" width="22" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="vxL-Li-GhX"/>
                             </imageView>
                         </subviews>
                     </view>
                     <connections>
-                        <outlet property="enableDisableButton" destination="cWL-PA-ejP" id="YZy-tc-7o4"/>
+                        <outlet property="enableDisableButton" destination="c3s-s6-qiq" id="ojQ-96-xIF"/>
+                        <outlet property="enableDisableUIButton" destination="cWL-PA-ejP" id="CES-zA-MJu"/>
+                        <outlet property="enableDisableUiButton" destination="cWL-PA-ejP" id="iqH-FC-gCY"/>
                         <outlet property="helloLabel" destination="TES-UO-XA5" id="lYF-5d-guB"/>
+                        <outlet property="martyStatusLabel" destination="TES-UO-XA5" id="jba-Ro-bXE"/>
+                        <outlet property="statusImage" destination="A1L-my-aOk" id="cI6-gf-oqb"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -753,7 +752,7 @@
                     <font key="font" metaFont="smallSystem"/>
                 </buttonCell>
             </objects>
-            <point key="canvasLocation" x="79.5" y="635"/>
+            <point key="canvasLocation" x="79.5" y="566"/>
         </scene>
     </scenes>
 </document>
