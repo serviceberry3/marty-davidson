@@ -13,7 +13,7 @@ internal let SQLITE_TRANSIENT = unsafeBitCast(-1, to: sqlite3_destructor_type.se
 
 import SQLite3
 
-class DatabaseHandler {
+class QueryMinion {
     private static let groupQuery = """
         SELECT handle.id, display_name, chat.guid
             FROM chat_handle_join INNER JOIN handle ON chat_handle_join.handle_id = handle.ROWID
@@ -31,6 +31,8 @@ class DatabaseHandler {
     ON attachment.ROWID = message_attachment_join.attachment_id
     WHERE message_id = ?
     """
+    
+    
     private static let newRecordquery = """
         SELECT handle.id, message.text, message.ROWID, message.cache_roomnames, message.is_from_me, message.destination_caller_id,
             message.date/1000000000 + strftime("%s", "2001-01-01"),
@@ -63,11 +65,14 @@ class DatabaseHandler {
 
         
         querySinceID = getCurrentMaxRecordID()
+        
+        //start querying the database on background thread
         start()
     }
     
     deinit {
         shouldExitThread = true
+        
         if sqlite3_close(db) != SQLITE_OK {
             print("error closing database")
         }
@@ -76,13 +81,17 @@ class DatabaseHandler {
     }
     
     func start() {
-        let dispatchQueue = DispatchQueue(label: "Jared Background Thread", qos: .background)
+        let dispatchQueue = DispatchQueue(label: "Marty Querier Background Thread", qos: .background)
+        
         dispatchQueue.async(execute: self.backgroundAction)
     }
     
     private func backgroundAction() {
         while shouldExitThread == false {
+            //query the database
             let elapsed = queryNewRecords()
+            
+            //wait for a certain amt of time (refreshSeconds - [amt of time query took]). this means every 5 sec we run a new query
             Thread.sleep(forTimeInterval: max(0, refreshSeconds - elapsed))
         }
     }
@@ -91,7 +100,7 @@ class DatabaseHandler {
         var id: String?
         var statement: OpaquePointer?
         
-        if sqlite3_prepare_v2(db, DatabaseHandler.maxRecordIDQuery, -1, &statement, nil) != SQLITE_OK {
+        if sqlite3_prepare_v2(db, QueryMinion.maxRecordIDQuery, -1, &statement, nil) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
             print("error preparing select: \(errmsg)")
         }
@@ -119,7 +128,7 @@ class DatabaseHandler {
         
         var statement: OpaquePointer?
         
-        if sqlite3_prepare_v2(db, DatabaseHandler.groupQuery, -1, &statement, nil) != SQLITE_OK {
+        if sqlite3_prepare_v2(db, QueryMinion.groupQuery, -1, &statement, nil) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
             print("error preparing select: \(errmsg)")
         }
@@ -162,7 +171,7 @@ class DatabaseHandler {
         
         defer { attachmentStatement = nil }
         
-        if sqlite3_prepare_v2(db, DatabaseHandler.attachmentQuery, -1, &attachmentStatement, nil) != SQLITE_OK {
+        if sqlite3_prepare_v2(db, QueryMinion.attachmentQuery, -1, &attachmentStatement, nil) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
             print("error preparing select: \(errmsg)")
         }
@@ -196,7 +205,7 @@ class DatabaseHandler {
         let start = Date()
         defer { statement = nil }
         
-        if sqlite3_prepare_v2(db, DatabaseHandler.newRecordquery, -1, &statement, nil) != SQLITE_OK {
+        if sqlite3_prepare_v2(db, QueryMinion.newRecordquery, -1, &statement, nil) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
             print("error preparing select: \(errmsg)")
         }
@@ -246,7 +255,7 @@ class DatabaseHandler {
                 recipient = group ?? Person(givenName: myName, handle: destination, isMe: true)
             }
             
-            let message = Message(body: TextBody(text), date: Date(timeIntervalSince1970: epochDate), sender: sender, recipient: recipient, guid: guid, attachments: hasAttachment ? retrieveAttachments(forMessage: rowID ?? "") : [],
+            let message = Scroll(body: TextBody(text), date: Date(timeIntervalSince1970: epochDate), sender: sender, recipient: recipient, guid: guid, attachments: hasAttachment ? retrieveAttachments(forMessage: rowID ?? "") : [],
                                   sendStyle: sendStyle, associatedMessageType: Int(associatedMessageType), associatedMessageGUID: associatedMessageGUID)
             
             //router?.route(message: message)

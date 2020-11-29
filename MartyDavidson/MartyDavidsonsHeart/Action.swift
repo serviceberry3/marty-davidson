@@ -27,7 +27,10 @@ public struct Action: Encodable, Equatable {
         if (actionTypeInt >= 3000) {
             event = .removed
             self.type = ActionType(fromActionTypeInt: actionTypeInt - 1000)
-        } else {
+        }
+        
+        
+        else {
             event = .placed
             self.type = ActionType(fromActionTypeInt: actionTypeInt)
         }

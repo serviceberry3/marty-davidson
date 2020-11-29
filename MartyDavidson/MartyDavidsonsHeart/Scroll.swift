@@ -8,8 +8,8 @@
 
 import Foundation
 
-public struct Message: Encodable {
-    public var body: MessageBody?
+public struct Scroll: Encodable {
+    public var body: ScrollBody?
     public var date: Date?
     public var sender: SenderEntity
     public var recipient: RecipientEntity
@@ -69,7 +69,7 @@ public struct Message: Encodable {
         }
     }
     
-    public init (body: MessageBody?, date: Date, sender: SenderEntity, recipient: RecipientEntity, guid: String? = nil, attachments: [Attachment] = [], sendStyle: String? = nil, associatedMessageType: Int? = nil, associatedMessageGUID: String? = nil) {
+    public init (body: ScrollBody?, date: Date, sender: SenderEntity, recipient: RecipientEntity, guid: String? = nil, attachments: [Attachment] = [], sendStyle: String? = nil, associatedMessageType: Int? = nil, associatedMessageGUID: String? = nil) {
         self.body = body
         self.recipient = recipient
         self.sender = sender

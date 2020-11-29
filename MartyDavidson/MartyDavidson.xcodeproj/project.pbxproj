@@ -10,7 +10,7 @@
 		A76DEFDA2570A0E400556562 /* Marty.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76DEFD92570A0E400556562 /* Marty.swift */; };
 		A76DEFDC2570A12400556562 /* NowWatchMeQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76DEFDB2570A12400556562 /* NowWatchMeQuery.swift */; };
 		A76DEFDF2570A4B200556562 /* RavenSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76DEFDE2570A4B200556562 /* RavenSender.swift */; };
-		A76DEFE12570A51C00556562 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76DEFE02570A51C00556562 /* Message.swift */; };
+		A76DEFE12570A51C00556562 /* Scroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76DEFE02570A51C00556562 /* Scroll.swift */; };
 		A76DEFE32570A54E00556562 /* TypesOfHaters.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76DEFE22570A54E00556562 /* TypesOfHaters.swift */; };
 		A76DEFE52570AA8200556562 /* TypesOfMassages.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76DEFE42570AA8200556562 /* TypesOfMassages.swift */; };
 		A76DEFE72570AAC400556562 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76DEFE62570AAC400556562 /* Action.swift */; };
@@ -29,7 +29,7 @@
 		A76DEFD92570A0E400556562 /* Marty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Marty.swift; sourceTree = "<group>"; };
 		A76DEFDB2570A12400556562 /* NowWatchMeQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowWatchMeQuery.swift; sourceTree = "<group>"; };
 		A76DEFDE2570A4B200556562 /* RavenSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RavenSender.swift; sourceTree = "<group>"; };
-		A76DEFE02570A51C00556562 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		A76DEFE02570A51C00556562 /* Scroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scroll.swift; sourceTree = "<group>"; };
 		A76DEFE22570A54E00556562 /* TypesOfHaters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypesOfHaters.swift; sourceTree = "<group>"; };
 		A76DEFE42570AA8200556562 /* TypesOfMassages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypesOfMassages.swift; sourceTree = "<group>"; };
 		A76DEFE62570AAC400556562 /* Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
@@ -62,7 +62,7 @@
 			isa = PBXGroup;
 			children = (
 				A76DEFDE2570A4B200556562 /* RavenSender.swift */,
-				A76DEFE02570A51C00556562 /* Message.swift */,
+				A76DEFE02570A51C00556562 /* Scroll.swift */,
 				A76DEFE22570A54E00556562 /* TypesOfHaters.swift */,
 				A76DEFE42570AA8200556562 /* TypesOfMassages.swift */,
 				A76DEFE62570AAC400556562 /* Action.swift */,
@@ -198,7 +198,7 @@
 				A76DEFEF257355F900556562 /* ContactHelper.swift in Sources */,
 				A76DEFDA2570A0E400556562 /* Marty.swift in Sources */,
 				A76DEFE32570A54E00556562 /* TypesOfHaters.swift in Sources */,
-				A76DEFE12570A51C00556562 /* Message.swift in Sources */,
+				A76DEFE12570A51C00556562 /* Scroll.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

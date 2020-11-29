@@ -8,9 +8,9 @@
 
 import Foundation
 
-public protocol MessageBody: Codable {}
+public protocol ScrollBody: Codable {}
 
-public struct TextBody: MessageBody, Codable {
+public struct TextBody: ScrollBody, Codable {
     public var message: String
     
     public init(_ message: String) {

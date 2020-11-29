@@ -11,5 +11,5 @@ import Foundation
 //basically like a Java interface. skeleton fxns
 public protocol RavenSender {
     func send(_ body: String, to recipient: RecipientEntity?)
-    func send(_ message: Message)
+    func send(_ message: Scroll)
 }

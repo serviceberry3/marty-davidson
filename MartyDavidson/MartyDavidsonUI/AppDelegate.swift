@@ -12,7 +12,7 @@ import Cocoa
 class AppDelegate: NSObject, NSApplicationDelegate {
 
     var sender: Marty
-    var databaseHelper: DatabaseHandler!
+    var databaseHelper: QueryMinion!
     
     override init() {
         //set initial userdefaults - Marty is initially enabled
@@ -21,7 +21,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             ])
         
         
-        //intanstiate a new marty
+        //instantiate a new marty
         sender = Marty()
 
         super.init()
@@ -35,7 +35,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let viewController = NSApplication.shared.keyWindow?.contentViewController as? ViewController
         
         //instantiate the DataBaseHandler
-        databaseHelper = DatabaseHandler(databaseLocation: messageDatabaseURL)
+        databaseHelper = QueryMinion(databaseLocation: messageDatabaseURL)
     }
 
     
