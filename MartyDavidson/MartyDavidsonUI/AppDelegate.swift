@@ -32,6 +32,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         let messageDatabaseURL = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask)[0]
             .appendingPathComponent("Messages").appendingPathComponent("chat.db")
+        
+        
         let viewController = NSApplication.shared.keyWindow?.contentViewController as? ViewController
         
         //instantiate the DataBaseHandler

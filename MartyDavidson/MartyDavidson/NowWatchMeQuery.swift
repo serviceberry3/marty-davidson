@@ -52,8 +52,11 @@ class QueryMinion {
     var refreshSeconds = 5.0
     var statement: OpaquePointer? = nil
     
+    var parser: Parser? = nil
+    
+    
     init(databaseLocation: URL) {
-        
+        //open the database using sqlite3
         if sqlite3_open(databaseLocation.path, &db) != SQLITE_OK {
             NSLog("Error opening SQLite database. Likely Full disk access error.")
     
@@ -70,21 +73,30 @@ class QueryMinion {
         start()
     }
     
+    //destructor
     deinit {
+        //join the backgnd querying thread
         shouldExitThread = true
         
+        //close the sqlite databse
         if sqlite3_close(db) != SQLITE_OK {
-            print("error closing database")
+            print("There was an error closing the sqlite database")
         }
         
+        //set database to null
         db = nil
     }
     
+    //start up the querying minion on background thread
     func start() {
+        //instantiate new DispatchQueue
+        //object that manages execution of tasks serially or concurrently on app's main thread or on backgnd thread
         let dispatchQueue = DispatchQueue(label: "Marty Querier Background Thread", qos: .background)
         
+        //async task
         dispatchQueue.async(execute: self.backgroundAction)
     }
+    
     
     private func backgroundAction() {
         while shouldExitThread == false {
@@ -96,14 +108,29 @@ class QueryMinion {
         }
     }
     
+    
     private func getCurrentMaxRecordID() -> String {
         var id: String?
+        
+        //pointer to the sqlite3 query statement
         var statement: OpaquePointer?
         
-        if sqlite3_prepare_v2(db, QueryMinion.maxRecordIDQuery, -1, &statement, nil) != SQLITE_OK {
+        //compile the sqlite3 statement and make sure compilation succeeded
+        if sqlite3_prepare_v2(db /*ptr to db*/,
+            QueryMinion.maxRecordIDQuery, /*UTF-8 encoded SQL query statment*/
+            -1, /*max length of the SQL query statment in bytes*/
+            &statement, /*OUT: dbl ptr to the compied query bytecode program*/
+            nil) /*OUT: dbl ptr to unused portion of the passed query statement*/
+            
+            != SQLITE_OK {
+            
+            //get the sqlite compiler error message
             let errmsg = String(cString: sqlite3_errmsg(db)!)
-            print("error preparing select: \(errmsg)")
+            
+            //print the error message
+            print("Error preparing select: \(errmsg)")
         }
+        
         
         while sqlite3_step(statement) == SQLITE_ROW {
             guard let idcString = sqlite3_column_text(statement, 0) else {
@@ -113,6 +140,7 @@ class QueryMinion {
             id = String(cString: idcString)
         }
         
+        
         if sqlite3_finalize(statement) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
             print("error finalizing prepared statement: \(errmsg)")
@@ -120,6 +148,7 @@ class QueryMinion {
         
         return id ?? "0"
     }
+    
     
     private func retrieveGroupInfo(chatID: String?) -> Group? {
         guard let chatHandle = chatID else {
@@ -158,13 +187,19 @@ class QueryMinion {
         return Group(name: groupName, handle: chatGUID ?? chatHandle, participants: People)
     }
     
+    
+    
     private func unwrapStringColumn(for sqlStatement: OpaquePointer?, at column: Int32) -> String? {
         if let cString = sqlite3_column_text(sqlStatement, column) {
             return String(cString: cString)
-        } else {
+        }
+        
+        else {
             return nil
         }
     }
+    
+    
     
     private func retrieveAttachments(forMessage messageID: String) -> [Attachment] {
         var attachmentStatement: OpaquePointer? = nil
@@ -201,6 +236,7 @@ class QueryMinion {
         return attachments
     }
     
+    //query chat.db for new messages
     private func queryNewRecords() -> Double {
         let start = Date()
         defer { statement = nil }
@@ -214,6 +250,7 @@ class QueryMinion {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
             print("failure binding: \(errmsg)")
         }
+        
         
         while sqlite3_step(statement) == SQLITE_ROW {
             var senderHandleOptional = unwrapStringColumn(for: statement, at: 0)
@@ -250,22 +287,27 @@ class QueryMinion {
             if (isFromMe) {
                 sender = Person(givenName: myName, handle: destination, isMe: true)
                 recipient = group ?? Person(givenName: buddyName, handle: senderHandle, isMe: false)
-            } else {
+            }
+            
+            else {
                 sender = Person(givenName: buddyName, handle: senderHandle, isMe: false)
                 recipient = group ?? Person(givenName: myName, handle: destination, isMe: true)
             }
             
+            //create the received message
             let message = Scroll(body: TextBody(text), date: Date(timeIntervalSince1970: epochDate), sender: sender, recipient: recipient, guid: guid, attachments: hasAttachment ? retrieveAttachments(forMessage: rowID ?? "") : [],
                                   sendStyle: sendStyle, associatedMessageType: Int(associatedMessageType), associatedMessageGUID: associatedMessageGUID)
             
-            //router?.route(message: message)
+            parser?.parse(message: message)
         }
+        
         
         if sqlite3_finalize(statement) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
             print("error finalizing prepared statement: \(errmsg)")
         }
         
+        //return amt of time this run of queryNewRecords() took, as a long
         return NSDate().timeIntervalSince(start)
     }
 }

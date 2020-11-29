@@ -15,6 +15,8 @@ public class Marty: RavenSender {
     //max number of queued operations that can execute at the same time
     //intialize the work queue so that it can only do one thread/job at a time
     init() {
+        print("Marty init")
+        
         queue.maxConcurrentOperationCount = 1
     }
     

@@ -33,27 +33,16 @@ class ViewController: NSViewController { //extending NSViewController
     }
     
     @IBAction func enableDisableAction(_ sender: Any) {
-        /*
-        var name = nameField.stringValue
-        
-        if name.isEmpty {
-            name = "World"
-        }
-        
-        let greeting = "Hello \(name)!"
-        helloLabel.stringValue = greeting*/
         
         //Marty's currently disabled
         if (self.defaults.bool(forKey: MartyConstants.martyIsDisabled)) {
             self.defaults.set(false, forKey: MartyConstants.martyIsDisabled)
         }
             
-        //Marty's currently enabled
+            //Marty's currently enabled
         else {
             self.defaults.set(true, forKey: MartyConstants.martyIsDisabled)
         }
-        
-        //updateButtons()
     }
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {

@@ -18,6 +18,7 @@
 		A76DEFEB2570AB3100556562 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76DEFEA2570AB3100556562 /* Configuration.swift */; };
 		A76DEFED2570ABCB00556562 /* SendStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76DEFEC2570ABCB00556562 /* SendStyle.swift */; };
 		A76DEFEF257355F900556562 /* ContactHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76DEFEE257355F900556562 /* ContactHelper.swift */; };
+		A76DEFF125742F4100556562 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76DEFF025742F4100556562 /* Parser.swift */; };
 		A7F434A3257055E50029044C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F434A2257055E50029044C /* AppDelegate.swift */; };
 		A7F434A5257055E50029044C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F434A4257055E50029044C /* ViewController.swift */; };
 		A7F434A7257055E60029044C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A7F434A6257055E60029044C /* Assets.xcassets */; };
@@ -37,6 +38,7 @@
 		A76DEFEA2570AB3100556562 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		A76DEFEC2570ABCB00556562 /* SendStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendStyle.swift; sourceTree = "<group>"; };
 		A76DEFEE257355F900556562 /* ContactHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactHelper.swift; sourceTree = "<group>"; };
+		A76DEFF025742F4100556562 /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 		A7F4349F257055E50029044C /* MartyDavidson.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MartyDavidson.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7F434A2257055E50029044C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A7F434A4257055E50029044C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -69,6 +71,7 @@
 				A76DEFE82570AAE500556562 /* ActionType.swift */,
 				A76DEFEA2570AB3100556562 /* Configuration.swift */,
 				A76DEFEC2570ABCB00556562 /* SendStyle.swift */,
+				A76DEFF025742F4100556562 /* Parser.swift */,
 			);
 			path = MartyDavidsonsHeart;
 			sourceTree = "<group>";
@@ -187,6 +190,7 @@
 			files = (
 				A76DEFDC2570A12400556562 /* NowWatchMeQuery.swift in Sources */,
 				A76DEFE52570AA8200556562 /* TypesOfMassages.swift in Sources */,
+				A76DEFF125742F4100556562 /* Parser.swift in Sources */,
 				A7F434A5257055E50029044C /* ViewController.swift in Sources */,
 				A76DEFE72570AAC400556562 /* Action.swift in Sources */,
 				A7F434B4257090DA0029044C /* MartyConstants.swift in Sources */,

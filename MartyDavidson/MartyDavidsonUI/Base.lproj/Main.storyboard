@@ -710,39 +710,37 @@
                         <rect key="frame" x="0.0" y="0.0" width="489" height="92"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TES-UO-XA5">
-                                <rect key="frame" x="156" y="38" width="176" height="18"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="Marty is currently disabled" id="DjT-gb-vTR">
-                                    <font key="font" metaFont="system" size="14"/>
-                                    <color key="textColor" name="controlDarkShadowColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c3s-s6-qiq">
-                                <rect key="frame" x="349" y="28" width="120" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" title="Enable Marty" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="cWL-PA-ejP">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="enableDisableAction:" target="XfG-lQ-9wD" id="9aE-1l-SF4"/>
-                                </connections>
-                            </button>
                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A1L-my-aOk">
                                 <rect key="frame" x="55" y="36" width="22" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="vxL-Li-GhX"/>
                             </imageView>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1XM-sC-sTR">
+                                <rect key="frame" x="120" y="40" width="217" height="17"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Marty is currently enabled" id="v4d-CZ-uko">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lWJ-TX-Rc0">
+                                <rect key="frame" x="330" y="29" width="145" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="Disable" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="PyZ-JP-O6Q">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="enableDisableAction:" target="XfG-lQ-9wD" id="OSB-lC-tNL"/>
+                                </connections>
+                            </button>
                         </subviews>
                     </view>
                     <connections>
-                        <outlet property="enableDisableButton" destination="c3s-s6-qiq" id="ojQ-96-xIF"/>
-                        <outlet property="enableDisableUIButton" destination="cWL-PA-ejP" id="CES-zA-MJu"/>
-                        <outlet property="enableDisableUiButton" destination="cWL-PA-ejP" id="iqH-FC-gCY"/>
-                        <outlet property="helloLabel" destination="TES-UO-XA5" id="lYF-5d-guB"/>
-                        <outlet property="martyStatusLabel" destination="TES-UO-XA5" id="jba-Ro-bXE"/>
+                        <outlet property="enableDisableButton" destination="lWJ-TX-Rc0" id="pgE-Hf-sFJ"/>
+                        <outlet property="enableDisableUiButton" destination="PyZ-JP-O6Q" id="cd5-dg-qLj"/>
+                        <outlet property="martyStatusLabel" destination="1XM-sC-sTR" id="bSp-Cm-H0Z"/>
                         <outlet property="statusImage" destination="A1L-my-aOk" id="cI6-gf-oqb"/>
                     </connections>
                 </viewController>
