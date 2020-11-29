@@ -20,7 +20,9 @@ public enum ActionType: String {
     public init(fromActionTypeInt actionTypeInt: Int) {
         if let configurationMapping = Configuration.shared.parameters?.actionType[actionTypeInt] {
             self.init(rawValue: configurationMapping)!
-        } else {
+        }
+        
+        else {
             self = .unknown
         }
     }

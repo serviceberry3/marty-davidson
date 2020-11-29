@@ -24,7 +24,9 @@ class Configuration {
     
     init() {
         print(Bundle.main)
+        
         let url = Bundle(for: type(of: self)).url(forResource: "Configuration", withExtension: "plist")!
+        
         if let data = try? Data(contentsOf: url) {
             let decoder = PropertyListDecoder()
             parameters = try? decoder.decode(ConfigParameters.self, from: data)

@@ -8,17 +8,40 @@
 
 import Cocoa
 
-@NSApplicationMain
+@NSApplicationMain //main entry pt of app
 class AppDelegate: NSObject, NSApplicationDelegate {
 
+    var sender: Marty
+    var databaseHelper: DatabaseHandler!
+    
+    override init() {
+        //set initial userdefaults - Marty is initially enabled
+        UserDefaults.standard.register(defaults: [
+            MartyConstants.martyIsDisabled: false,
+            ])
+        
+        
+        //intanstiate a new marty
+        sender = Marty()
 
-
-    func applicationDidFinishLaunching(_ aNotification: Notification) {
-        // Insert code here to initialize your application
+        super.init()
     }
 
+    //code to launch app
+    func applicationDidFinishLaunching(_ aNotification: Notification) {
+        
+        let messageDatabaseURL = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask)[0]
+            .appendingPathComponent("Messages").appendingPathComponent("chat.db")
+        let viewController = NSApplication.shared.keyWindow?.contentViewController as? ViewController
+        
+        //instantiate the DataBaseHandler
+        databaseHelper = DatabaseHandler(databaseLocation: messageDatabaseURL)
+    }
+
+    
+    //code to tear down application
     func applicationWillTerminate(_ aNotification: Notification) {
-        // Insert code here to tear down your application
+        
     }
 
 

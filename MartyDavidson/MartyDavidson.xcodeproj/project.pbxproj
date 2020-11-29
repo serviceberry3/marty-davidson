@@ -17,6 +17,7 @@
 		A76DEFE92570AAE500556562 /* ActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76DEFE82570AAE500556562 /* ActionType.swift */; };
 		A76DEFEB2570AB3100556562 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76DEFEA2570AB3100556562 /* Configuration.swift */; };
 		A76DEFED2570ABCB00556562 /* SendStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76DEFEC2570ABCB00556562 /* SendStyle.swift */; };
+		A76DEFEF257355F900556562 /* ContactHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76DEFEE257355F900556562 /* ContactHelper.swift */; };
 		A7F434A3257055E50029044C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F434A2257055E50029044C /* AppDelegate.swift */; };
 		A7F434A5257055E50029044C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F434A4257055E50029044C /* ViewController.swift */; };
 		A7F434A7257055E60029044C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A7F434A6257055E60029044C /* Assets.xcassets */; };
@@ -35,6 +36,7 @@
 		A76DEFE82570AAE500556562 /* ActionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionType.swift; sourceTree = "<group>"; };
 		A76DEFEA2570AB3100556562 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		A76DEFEC2570ABCB00556562 /* SendStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendStyle.swift; sourceTree = "<group>"; };
+		A76DEFEE257355F900556562 /* ContactHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactHelper.swift; sourceTree = "<group>"; };
 		A7F4349F257055E50029044C /* MartyDavidson.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MartyDavidson.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7F434A2257055E50029044C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A7F434A4257055E50029044C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -56,7 +58,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		A76DEFDD2570A49800556562 /* MartyDavidson'sHeart */ = {
+		A76DEFDD2570A49800556562 /* MartyDavidsonsHeart */ = {
 			isa = PBXGroup;
 			children = (
 				A76DEFDE2570A4B200556562 /* RavenSender.swift */,
@@ -68,13 +70,13 @@
 				A76DEFEA2570AB3100556562 /* Configuration.swift */,
 				A76DEFEC2570ABCB00556562 /* SendStyle.swift */,
 			);
-			path = "MartyDavidson'sHeart";
+			path = MartyDavidsonsHeart;
 			sourceTree = "<group>";
 		};
 		A7F43496257055E50029044C = {
 			isa = PBXGroup;
 			children = (
-				A76DEFDD2570A49800556562 /* MartyDavidson'sHeart */,
+				A76DEFDD2570A49800556562 /* MartyDavidsonsHeart */,
 				A7F434B225708FF10029044C /* MartyDavidsonUI */,
 				A7F434A1257055E50029044C /* MartyDavidson */,
 				A7F434A0257055E50029044C /* Products */,
@@ -97,6 +99,7 @@
 				A7F434AB257055E60029044C /* Info.plist */,
 				A76DEFD92570A0E400556562 /* Marty.swift */,
 				A76DEFDB2570A12400556562 /* NowWatchMeQuery.swift */,
+				A76DEFEE257355F900556562 /* ContactHelper.swift */,
 			);
 			path = MartyDavidson;
 			sourceTree = "<group>";
@@ -192,6 +195,7 @@
 				A76DEFED2570ABCB00556562 /* SendStyle.swift in Sources */,
 				A7F434A3257055E50029044C /* AppDelegate.swift in Sources */,
 				A76DEFDF2570A4B200556562 /* RavenSender.swift in Sources */,
+				A76DEFEF257355F900556562 /* ContactHelper.swift in Sources */,
 				A76DEFDA2570A0E400556562 /* Marty.swift in Sources */,
 				A76DEFE32570A54E00556562 /* TypesOfHaters.swift in Sources */,
 				A76DEFE12570A51C00556562 /* Message.swift in Sources */,
