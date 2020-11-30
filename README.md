@@ -8,3 +8,4 @@ A version for newer operating systems is being developed. I'm working on fixing 
 A version is also being developed as a patch to the Messages app on Android/AOSP devices. Coming soon.
 
 <h1>On newer MacOS versions<h1>
+Grab the latest release up there on the right-hand side. Download that .app file. You'll know what to do after that...
