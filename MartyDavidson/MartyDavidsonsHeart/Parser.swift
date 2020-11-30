@@ -8,16 +8,25 @@
 
 import Foundation
 
+
+
 class Parser {
-    init() {
+    
+    var ourMarty: RavenSender?
+    init(ourMarty: RavenSender?) {
+        guard let martyReceived = ourMarty else {
+            return
+        }
+        
+        self.ourMarty = martyReceived
         
     }
     
     func parse(message: Scroll?) {
-
-        
         print((message?.body as? TextBody)!.message)
-        print("testing")
+        
+        
+        ourMarty?.send(message!)
     }
     
     deinit {

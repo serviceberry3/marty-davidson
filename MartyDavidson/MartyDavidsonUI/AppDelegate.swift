@@ -30,14 +30,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     //code to launch app
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         
-        let messageDatabaseURL = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask)[0]
-            .appendingPathComponent("Messages").appendingPathComponent("chat.db")
+        let messageDatabaseURL = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask)[0].appendingPathComponent("Messages").appendingPathComponent("chat.db")
         
+        //let messageDatabaseURL = '/Users/noah/Library/Messages/chat.db' as URL
+        
+        print("Opening", messageDatabaseURL.path)
         
         let viewController = NSApplication.shared.keyWindow?.contentViewController as? ViewController
         
         //instantiate the DataBaseHandler
-        databaseHelper = QueryMinion(databaseLocation: messageDatabaseURL)
+        databaseHelper = QueryMinion(databaseLocation: messageDatabaseURL, ourMarty: sender)
     }
 
     

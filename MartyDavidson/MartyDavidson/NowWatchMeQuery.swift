@@ -51,23 +51,35 @@ class QueryMinion {
     var shouldExitThread = false
     var refreshSeconds = 5.0
     var statement: OpaquePointer? = nil
-    
+    var ourMarty: RavenSender?
     var parser: Parser? = nil
     
     
-    init(databaseLocation: URL) {
+    init(databaseLocation: URL, ourMarty: RavenSender?) {
+        guard let ourMartyReceived = ourMarty else {
+            return
+        }
+        
+        self.ourMarty = ourMartyReceived
+        
+        
         //open the database using sqlite3
         if sqlite3_open(databaseLocation.path, &db) != SQLITE_OK {
-            NSLog("Error opening SQLite database. Likely Full disk access error.")
+            print("Error opening SQLite database. Likely a \"Full disk access\" error. Bleep.")
     
             //TODO: disk access for newer MacOS?
             
             
             return
         }
+        else {
+            print("SUCCESS")
+        }
 
         
         querySinceID = getCurrentMaxRecordID()
+        
+        parser = Parser(ourMarty: ourMarty)
         
         //start querying the database on background thread
         start()
@@ -100,11 +112,16 @@ class QueryMinion {
     
     private func backgroundAction() {
         while shouldExitThread == false {
-            //query the database
-            let elapsed = queryNewRecords()
+            //let defaults = UserDefaults.standard
             
-            //wait for a certain amt of time (refreshSeconds - [amt of time query took]). this means every 5 sec we run a new query
-            Thread.sleep(forTimeInterval: max(0, refreshSeconds - elapsed))
+            //Don't do anything if Marty is currently disabled.
+            //if !defaults.bool(forKey: MartyConstants.martyIsDisabled) {
+                //query the database
+                let elapsed = queryNewRecords()
+                
+                //wait for a certain amt of time (refreshSeconds - [amt of time query took]). this means every 5 sec we run a new query
+                Thread.sleep(forTimeInterval: max(0, refreshSeconds - elapsed))
+            //}
         }
     }
     
@@ -143,7 +160,7 @@ class QueryMinion {
         
         if sqlite3_finalize(statement) != SQLITE_OK {
             let errmsg = String(cString: sqlite3_errmsg(db)!)
-            print("error finalizing prepared statement: \(errmsg)")
+            print("Error finalizing prepared statement: \(errmsg)")
         }
         
         return id ?? "0"
@@ -253,6 +270,7 @@ class QueryMinion {
         
         
         while sqlite3_step(statement) == SQLITE_ROW {
+            print("BIGBOI")
             var senderHandleOptional = unwrapStringColumn(for: statement, at: 0)
             let textOptional = unwrapStringColumn(for: statement, at: 1)
             let rowID = unwrapStringColumn(for: statement, at: 2)
@@ -266,7 +284,7 @@ class QueryMinion {
             let associatedMessageGUID = unwrapStringColumn(for: statement, at: 10)
             let guid = unwrapStringColumn(for: statement, at: 11)
             let destinationCallerId = unwrapStringColumn(for: statement, at: 12)
-            NSLog("Processing \(rowID ?? "unknown")")
+            print("Processing \(rowID ?? "unknown")")
             
             querySinceID = rowID;
             
@@ -285,6 +303,7 @@ class QueryMinion {
             let group = retrieveGroupInfo(chatID: roomName)
             
             if (isFromMe) {
+                //return NSDate().timeIntervalSince(start)
                 sender = Person(givenName: myName, handle: destination, isMe: true)
                 recipient = group ?? Person(givenName: buddyName, handle: senderHandle, isMe: false)
             }
@@ -298,7 +317,12 @@ class QueryMinion {
             let message = Scroll(body: TextBody(text), date: Date(timeIntervalSince1970: epochDate), sender: sender, recipient: recipient, guid: guid, attachments: hasAttachment ? retrieveAttachments(forMessage: rowID ?? "") : [],
                                   sendStyle: sendStyle, associatedMessageType: Int(associatedMessageType), associatedMessageGUID: associatedMessageGUID)
             
+            
+            print("Parsing incoming message...")
+            
+            if (!isFromMe) {
             parser?.parse(message: message)
+            }
         }
         
         

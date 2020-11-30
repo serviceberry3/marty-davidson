@@ -55,27 +55,38 @@ public class Marty: RavenSender {
         }
         
         let recipient = message.recipient.handle
+        let sender = message.sender.handle
+        
         
         if let textBody = message.body as? TextBody {
             var scriptPath: String?
             let body = textBody.message
             
+            //group?
             if message.recipient.handle.contains(";+;") {
                 scriptPath = Bundle.main.url(forResource: "SendText", withExtension: "scpt")?.path
             }
             
             
             else {
+                print("SENDING VIA SINGLE BUDDY SCPT")
                 scriptPath = Bundle.main.url(forResource: "SendTextSingleBuddy", withExtension: "scpt")?.path
+                
+                scriptPath = "/Users/noah/Documents/Marty/marty-davidson/MartyDavidson/MartyDavidson/SendTextSingleBuddy.scpt"
+                print(scriptPath)
             }
             
             //add a job to the work queue (allow for multithreading)
             queue.addOperation {
-                self.executeScript(scriptPath: scriptPath, body: body, recipient: recipient)
+                print("Adding operation to queue")
+                self.executeScript(scriptPath: scriptPath!, body: body, recipient: sender)
             }
         }
         
+        /*
         if let attachments = message.attachments {
+            print("ATTACHMENT")
+            
             var scriptPath: String?
             
             if message.recipient.handle.contains(";+;") {
@@ -92,16 +103,18 @@ public class Marty: RavenSender {
                     self.executeScript(scriptPath: scriptPath, body: attachment.filePath, recipient: recipient)
                 }
             }
-        }
+        }*/
     }
     
     
     //function to run an AppleScript scpt file
     private func executeScript(scriptPath: String?, body: String?, recipient: String?) {
         //null checking
-        guard(scriptPath != nil && body != nil && recipient != nil) else {
+        guard (scriptPath != nil && body != nil && recipient != nil) else {
             return
         }
+        
+        print("Recipient is", recipient)
         
         
         //instantiate a new Process
