@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		A7233D5E2574B79800A574E3 /* Buddy.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7233D5D2574B79800A574E3 /* Buddy.swift */; };
+		A725D0592585376C00584085 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = A725D0582585376C00584085 /* Logger.swift */; };
+		A725D05B2585C0BB00584085 /* SendTextSingleBuddy.scpt in Resources */ = {isa = PBXBuildFile; fileRef = A725D05A2585C0BB00584085 /* SendTextSingleBuddy.scpt */; };
 		A76DEFDA2570A0E400556562 /* Marty.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76DEFD92570A0E400556562 /* Marty.swift */; };
 		A76DEFDC2570A12400556562 /* NowWatchMeQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76DEFDB2570A12400556562 /* NowWatchMeQuery.swift */; };
 		A76DEFDF2570A4B200556562 /* RavenSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76DEFDE2570A4B200556562 /* RavenSender.swift */; };
@@ -29,6 +31,8 @@
 
 /* Begin PBXFileReference section */
 		A7233D5D2574B79800A574E3 /* Buddy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buddy.swift; sourceTree = "<group>"; };
+		A725D0582585376C00584085 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		A725D05A2585C0BB00584085 /* SendTextSingleBuddy.scpt */ = {isa = PBXFileReference; lastKnownFileType = file; path = SendTextSingleBuddy.scpt; sourceTree = "<group>"; };
 		A76DEFD92570A0E400556562 /* Marty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Marty.swift; sourceTree = "<group>"; };
 		A76DEFDB2570A12400556562 /* NowWatchMeQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowWatchMeQuery.swift; sourceTree = "<group>"; };
 		A76DEFDE2570A4B200556562 /* RavenSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RavenSender.swift; sourceTree = "<group>"; };
@@ -100,12 +104,14 @@
 		A7F434A1257055E50029044C /* MartyDavidson */ = {
 			isa = PBXGroup;
 			children = (
+				A725D05A2585C0BB00584085 /* SendTextSingleBuddy.scpt */,
 				A7F434AC257055E60029044C /* MartyDavidson.entitlements */,
 				A7F434B3257090DA0029044C /* MartyConstants.swift */,
 				A7F434AB257055E60029044C /* Info.plist */,
 				A76DEFD92570A0E400556562 /* Marty.swift */,
 				A76DEFDB2570A12400556562 /* NowWatchMeQuery.swift */,
 				A76DEFEE257355F900556562 /* ContactHelper.swift */,
+				A725D0582585376C00584085 /* Logger.swift */,
 			);
 			path = MartyDavidson;
 			sourceTree = "<group>";
@@ -184,6 +190,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A725D05B2585C0BB00584085 /* SendTextSingleBuddy.scpt in Resources */,
 				A7F434A7257055E60029044C /* Assets.xcassets in Resources */,
 				A7F434AA257055E60029044C /* Main.storyboard in Resources */,
 			);
@@ -204,6 +211,7 @@
 				A7F434B4257090DA0029044C /* MartyConstants.swift in Sources */,
 				A76DEFE92570AAE500556562 /* ActionType.swift in Sources */,
 				A76DEFEB2570AB3100556562 /* Configuration.swift in Sources */,
+				A725D0592585376C00584085 /* Logger.swift in Sources */,
 				A76DEFED2570ABCB00556562 /* SendStyle.swift in Sources */,
 				A7F434A3257055E50029044C /* AppDelegate.swift in Sources */,
 				A76DEFDF2570A4B200556562 /* RavenSender.swift in Sources */,

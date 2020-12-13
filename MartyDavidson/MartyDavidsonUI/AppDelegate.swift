@@ -16,9 +16,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     override init() {
         //set initial userdefaults - Marty is initially enabled
-        UserDefaults.standard.register(defaults: [
-            MartyConstants.martyIsDisabled: false,
-            ])
+        UserDefaults.standard.register(defaults: [MartyConstants.martyIsDisabled: false, ])
         
         
         //instantiate a new marty
@@ -29,12 +27,30 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     //code to launch app
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        let docsFolder = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("martysexylog.log").path
+        print(docsFolder)
+        let arg = "rm " + docsFolder
+        
+        //clean the log file
+        do {
+            let fileManager = FileManager.default
+            if fileManager.fileExists(atPath: docsFolder) {
+                // Delete file
+                try fileManager.removeItem(atPath: docsFolder)
+            }
+            else {
+                print("File does not exist")
+            }
+        }
+        catch let error as NSError {
+            print("An error took place: \(error)")
+        }
         
         let messageDatabaseURL = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask)[0].appendingPathComponent("Messages").appendingPathComponent("chat.db")
         
         //let messageDatabaseURL = '/Users/noah/Library/Messages/chat.db' as URL
         
-        print("Opening", messageDatabaseURL.path)
+        print("Opening chat.db", messageDatabaseURL.path)
         
         let viewController = NSApplication.shared.keyWindow?.contentViewController as? ViewController
         

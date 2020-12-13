@@ -57,7 +57,7 @@ public class Marty: RavenSender {
         let recipient = message.recipient.handle
         let sender = message.sender.handle
         
-        
+        //make sure cast is successful
         if let textBody = message.body as? TextBody {
             var scriptPath: String?
             let body = textBody.message
@@ -67,19 +67,22 @@ public class Marty: RavenSender {
                 scriptPath = Bundle.main.url(forResource: "SendText", withExtension: "scpt")?.path
             }
             
-            
+            //default
             else {
                 print("SENDING VIA SINGLE BUDDY SCPT")
+                Logger.log("Marty: sending message " + body + " using osascript..." )
                 scriptPath = Bundle.main.url(forResource: "SendTextSingleBuddy", withExtension: "scpt")?.path
                 
-                scriptPath = "/Users/noah/Documents/Marty/marty-davidson/MartyDavidson/MartyDavidson/SendTextSingleBuddy.scpt"
+                //scriptPath = "/Users/noah/Documents/Marty/marty-davidson/MartyDavidson/MartyDavidson/SendTextSingleBuddy.scpt"
                 print(scriptPath)
+                Logger.log("Found scripPath: " + scriptPath!)
             }
             
             //add a job to the work queue (allow for multithreading)
             queue.addOperation {
                 print("Adding operation to queue")
-                self.executeScript(scriptPath: scriptPath!, body: body, recipient: sender)
+                Logger.log("Adding osascript to queue")
+                self.executeScript(scriptPath: scriptPath, body: body, recipient: sender)
             }
         }
         
@@ -127,5 +130,16 @@ public class Marty: RavenSender {
         
         //wait for the shell cmd to finish running
         task.waitUntilExit()
+    }
+    
+    //run shell script
+    @discardableResult
+    public static func shell(_ args: String...) -> Int32 {
+        let task = Process()
+        task.launchPath = "/usr/bin/env"
+        task.arguments = args
+        task.launch()
+        task.waitUntilExit()
+        return task.terminationStatus
     }
 }

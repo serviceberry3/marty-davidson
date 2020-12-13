@@ -28,6 +28,7 @@ class Parser {
     
     func parse(message: Scroll?) {
         print((message?.body as? TextBody)!.message)
+        Logger.log("MartyParser received the message " + (message?.body as? TextBody)!.message + ", now echoing back...")
         
         
         ourMarty?.send(message!)
