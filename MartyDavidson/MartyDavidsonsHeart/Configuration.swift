@@ -25,6 +25,7 @@ class Configuration {
     init() {
         print(Bundle.main)
         
+        //***CRASH SOURCE ---- Thread 4: Fatal error: Unexpectedly found nil while unwrapping an Optional value
         let url = Bundle(for: type(of: self)).url(forResource: "Configuration", withExtension: "plist")!
         
         if let data = try? Data(contentsOf: url) {

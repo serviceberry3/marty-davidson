@@ -7,5 +7,6 @@ A version for newer operating systems is being developed. I'm working on fixing 
 
 A version is also being developed as a patch to the Messages app on Android/AOSP devices. Coming soon.
 
-<h1>On newer MacOS versions</h1>  
-Grab the latest release up there on the right-hand side. Download that .app file. You'll know what to do after that...
+# On newer MacOS versions #
+***12/16/20:*** I'm working on a new release which fixes bugs and adds support for messages "reactions." Should be up soon.    
+***11/30/20:*** Grab the latest release up there on the right-hand side. Download that .app file. You'll know what to do after that...
