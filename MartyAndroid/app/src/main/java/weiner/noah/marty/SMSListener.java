@@ -39,9 +39,8 @@ public class SMSListener extends BroadcastReceiver {
 
                         String sender = msgs[i].getDisplayOriginatingAddress();
 
-
                         //run callback fxn for message received
-                        SMSCallback.smsReceived(msgBody, sender);
+                        SMSCallback.smsReceived((MainActivity)context, msgBody, sender);
                     }
                 }
                 catch(Exception e) {
