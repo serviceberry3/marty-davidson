@@ -1,13 +1,12 @@
 package weiner.noah.marty;
 
-import android.Manifest;
 import android.content.IntentFilter;
 
-public class NativeSMSInterceptorImpl implements NativeSMSInterceptor {
+public class SMSInterceptorImpl implements SMSInterceptor {
     private SMSListener smsListener;
     private MainActivity mainActivity;
 
-    public NativeSMSInterceptorImpl(MainActivity mainActivity) {
+    public SMSInterceptorImpl(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
     }
 

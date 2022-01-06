@@ -4,16 +4,21 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 
 public class MainActivity extends AppCompatActivity {
-    private NativeSMSInterceptorImpl nativeSMSInterceptor = new NativeSMSInterceptorImpl(this);
-    private NativePhoneCallInterceptorImpl nativePhoneCallInterceptor = new NativePhoneCallInterceptorImpl(this);
+    private SMSInterceptorImpl nativeSMSInterceptor = new SMSInterceptorImpl(this);
+    private PhoneCallInterceptorImpl nativePhoneCallInterceptor = new PhoneCallInterceptorImpl(this);
 
     private static final int PERMISSION_REQUEST_CODE = 1;
 
     public MartyDavidson myMarty;
+
+    public BuddyDbHelper dbHelper;
+    public SQLiteDatabase writeDb;
+    public SQLiteDatabase readDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +38,10 @@ public class MainActivity extends AppCompatActivity {
 
         //instantiate the Marty
         myMarty = new MartyDavidson();
+
+        dbHelper = new BuddyDbHelper(this);
+        writeDb = dbHelper.getWritableDatabase();
+        readDb = dbHelper.getReadableDatabase();
 
         //set up the listeners
         nativeSMSInterceptor.bindSMSListener();

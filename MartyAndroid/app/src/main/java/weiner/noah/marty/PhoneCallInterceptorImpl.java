@@ -2,11 +2,11 @@ package weiner.noah.marty;
 
 import android.content.IntentFilter;
 
-public class NativePhoneCallInterceptorImpl {
+public class PhoneCallInterceptorImpl {
     private PhoneCallListener phoneCallListener;
     private MainActivity mainActivity;
 
-    public NativePhoneCallInterceptorImpl(MainActivity mainActivity) {
+    public PhoneCallInterceptorImpl(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
     }
 

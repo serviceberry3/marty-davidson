@@ -13,7 +13,6 @@ import java.util.Objects;
 public class SMSListener extends BroadcastReceiver {
     private final String TAG = "SMSListener";
 
-
     @Override
     public void onReceive(Context context, Intent intent) {
         if (Objects.equals(intent.getAction(), "android.provider.Telephony.SMS_RECEIVED")) {

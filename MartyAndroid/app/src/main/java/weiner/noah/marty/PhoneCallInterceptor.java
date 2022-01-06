@@ -1,6 +1,6 @@
 package weiner.noah.marty;
 
-public interface NativePhoneCallInterceptor {
+public interface PhoneCallInterceptor {
     public void bindPhoneCallListener();
     public void unbindPhoneCallListener();
 }
