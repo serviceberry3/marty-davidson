@@ -1,12 +1,14 @@
-Hi! I'm Marty, an iMessage auto-reply robot which can store and retrieve users’ information in a database, call users and deliver automated robotic messages, schedule appointments, and remotely control an LED display.
-My code has just been transitioned from AppleScript to JavaScript (JXA). My JXA version is better-written and glitch-free. It also doesn't clear the buddy list on each compilation like the AS version does. Cheers!
+# An auto-reply bot for iMessage (Mac) and Android Messages #
 
-Change any .applescript files to .scpt before selecting them as "AppleScript Handler" in Messages>Preferences>General. I just changed them to .applescript so that they are viewable on GitHub.
+This is Marty, an iMessage auto-reply robot which can store and retrieve users’ information in an SQL databse, call users and deliver automated robotic messages, schedule appointments, and remotely control an LED display.
 
-A version for newer operating systems is being developed. I'm working on fixing glitches in the AS version.
+There are three versions of Marty currently available:
+* For older versions (pre-High Sierra) of MacOS. Probably won't work further back than OS X Mountain Lion. This version is implemented in AppleScript or JavaScript for Automation (JXA). Located in **Marty_AppleScript** and **Marty_JavaScript** folders. 
+    * To use it, change any AppleScript files to .scpt and then select them as the "AppleScript Handler" in Messages > Preferences > General on a Mac Laptop. 
+* For newer verisons (High Sierra or more recent) of MacOS. This version is implemented in Swift and interacts with chat.db via SQL.
+* For Android. This version is an Android app that uses Android's BroadCastReceiver and android.provider.Telephony.SMS_RECEIVED.
 
-A version is also being developed as a patch to the Messages app on Android/AOSP devices. Coming soon.
-
-# On newer MacOS versions #
-***12/16/20:*** I'm working on a new release which fixes bugs and adds support for messages "reactions." Should be up soon.    
+# Updates #
+## Newer MacOS versions ##
+***12/16/20:*** I'm working on a new release which fixes bugs and adds support for messages "reactions.".    
 ***11/30/20:*** Grab the latest release up there on the right-hand side. Download that .app file. You'll know what to do after that...

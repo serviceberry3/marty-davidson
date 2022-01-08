@@ -9,12 +9,12 @@ public final class BuddyListContract {
                     BuddyListEntry._ID + " INTEGER PRIMARY KEY," +
                     BuddyListEntry.FIRST_COL_NAME + " TEXT," +
                     BuddyListEntry.SECOND_COL_NAME + " TEXT," +
-                    BuddyListEntry.THIRD_COL_NAME + " INTEGER)";
+                    BuddyListEntry.THIRD_COL_NAME + " INTEGER," +
+                    BuddyListEntry.FOURTH_COL_NAME + " BIGINT" +
+                    ")";
 
     //delete buddy table
-    public static final String SQL_DELETE_ENTRIES =
-            "DROP TABLE IF EXISTS " + BuddyListEntry.TABLE_NAME;
-
+    public static final String SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS " + BuddyListEntry.TABLE_NAME;
 
     // To prevent someone from accidentally instantiating the contract class,
     // make the constructor private.
@@ -26,5 +26,6 @@ public final class BuddyListContract {
         public static final String FIRST_COL_NAME = "number";
         public static final String SECOND_COL_NAME = "name";
         public static final String THIRD_COL_NAME = "state";
+        public static final String FOURTH_COL_NAME = "time";
     }
 }

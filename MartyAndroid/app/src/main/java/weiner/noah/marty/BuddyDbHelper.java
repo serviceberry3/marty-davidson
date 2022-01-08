@@ -19,8 +19,7 @@ public class BuddyDbHelper extends SQLiteOpenHelper {
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // This database is only a cache for online data, so its upgrade policy is
-        // to simply to discard the data and start over
+        //this db is only a cache for online data, so upgrade policy is to discard data and start over
         db.execSQL(BuddyListContract.SQL_DELETE_ENTRIES);
         onCreate(db);
     }

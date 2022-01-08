@@ -2,5 +2,8 @@ package weiner.noah.marty;
 
 public enum MartyState {
     IDLE,
-    ACCEPTINGDNDNUDGE;
+    ACCEPTINGDNDNUDGE,
+    MARTY,
+    AWAITINGDATEENTRY,
+    DATEFORMATACCEPTED_AWAITINGEMAIL;
 }
