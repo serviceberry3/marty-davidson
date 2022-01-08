@@ -1,6 +1,6 @@
 # An auto-reply bot for iMessage (Mac) and Android Messages #
 
-This is Marty, an iMessage auto-reply robot which can store and retrieve users’ information in an SQL databse, call users and deliver automated robotic messages, schedule appointments, and remotely control an LED display.
+This is Marty, a texting auto-reply robot which can store and retrieve users’ information in an SQL databse, call users and deliver automated robotic messages, schedule appointments, and remotely control an LED display.
 
 There are three versions of Marty currently available:
 * For older versions (pre-High Sierra) of MacOS. Probably won't work further back than OS X Mountain Lion. This version is implemented in AppleScript or JavaScript for Automation (JXA). Located in **Marty_AppleScript** and **Marty_JavaScript** folders. 
