@@ -10,5 +10,5 @@ There are three versions of Marty currently available:
 
 # Updates #
 ## Newer MacOS versions ##
-***12/16/20:*** I'm working on a new release which fixes bugs and adds support for messages "reactions.".    
+***12/16/20:*** I'm working on a new release which fixes bugs and adds support for messages "reactions." 
 ***11/30/20:*** Grab the latest release up there on the right-hand side. Download that .app file. You'll know what to do after that...
